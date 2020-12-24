@@ -36,7 +36,7 @@ package org.yiyi.spring.iocstart;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.ClassPathResource;
-import org.yiyi.spring.iocstart.entity.People;
+import org.yiyi.spring.iocstart.entity.xml.People;
 
 /**
  * 编程式启动一个bean factory，从xml读取配置信息
@@ -47,7 +47,7 @@ public class DefListBeanFactoryStarter
 {
     public static void main (String[] args)
     {
-        ClassPathResource cpr = new ClassPathResource ("META-INF/application.xml");
+        ClassPathResource cpr = new ClassPathResource ("META-INF/iocstart/application.xml");
         DefaultListableBeanFactory factory = new DefaultListableBeanFactory ();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader (factory);
         reader.loadBeanDefinitions (cpr);

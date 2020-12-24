@@ -31,33 +31,48 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.aop.advisor;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
-
-import java.lang.annotation.Annotation;
+import org.aopalliance.aop.Advice;
+import org.springframework.aop.Advisor;
+import org.springframework.aop.Pointcut;
+import org.springframework.aop.PointcutAdvisor;
+import org.yiyi.spring.aop.advice.TestAdvice;
+import org.yiyi.spring.aop.pointcut.TestPointcut;
 
 /**
- * classPathXmlApplicationContext启动
+ * 测试advisor
+ *
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.22
  */
-public class ClzPathAppCtxStarter
+public class TestAdvisor implements PointcutAdvisor
 {
-    public static void main (String[] args)
+    private Advice advice;
+    private Pointcut pointcut;
+
+    public Advice getAdvice ()
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
+        return advice;
+    }
 
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
+    public boolean isPerInstance ()
+    {
+        return false;
+    }
 
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
+    public Pointcut getPointcut ()
+    {
+        return pointcut;
+    }
 
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+    public void setAdvice (Advice advice)
+    {
+        this.advice = advice;
+    }
+
+    public void setPointcut (Pointcut pointcut)
+    {
+        this.pointcut = pointcut;
     }
 }

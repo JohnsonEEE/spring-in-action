@@ -31,33 +31,43 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.iocstart.entity.xml;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
-
-import java.lang.annotation.Annotation;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * classPathXmlApplicationContext启动
  * @author yi.yi
  * @date 2020.12.04
  */
-public class ClzPathAppCtxStarter
+public class People
 {
-    public static void main (String[] args)
+    private String id;
+    private String name;
+
+    public String getId ()
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
+        return id;
+    }
 
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
+    public void setId (String id)
+    {
+        this.id = id;
+    }
 
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
+    public String getName ()
+    {
+        return name;
+    }
 
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+    public void setName (String name)
+    {
+        this.name = name;
+    }
+
+    @Override
+    public String toString ()
+    {
+        return ToStringBuilder.reflectionToString (this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

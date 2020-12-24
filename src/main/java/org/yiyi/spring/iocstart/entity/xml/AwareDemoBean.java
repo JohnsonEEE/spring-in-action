@@ -31,43 +31,64 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart.entity;
+package org.yiyi.spring.iocstart.entity.xml;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.17
  */
-public class People
+public class AwareDemoBean implements BeanPostProcessor, BeanNameAware, BeanClassLoaderAware, BeanFactoryAware, ApplicationContextAware, InitializingBean
 {
-    private String id;
-    private String name;
 
-    public String getId ()
+    public void setBeanName (String name)
     {
-        return id;
+        System.out.println ("setBeanName: " + name);
     }
 
-    public void setId (String id)
+    public void afterPropertiesSet () throws Exception
     {
-        this.id = id;
+        System.out.println ("afterPropertiesSet");
     }
 
-    public String getName ()
+    public Object postProcessBeforeInitialization (Object bean, String beanName) throws BeansException
     {
-        return name;
+        System.out.println ("postProcessBeforeInitialization: " + beanName);
+        return bean;
     }
 
-    public void setName (String name)
+    public Object postProcessAfterInitialization (Object bean, String beanName) throws BeansException
     {
-        this.name = name;
+        System.out.println ("postProcessAfterInitialization: " + beanName);
+        return bean;
     }
 
-    @Override
-    public String toString ()
+    public void setApplicationContext (ApplicationContext applicationContext) throws BeansException
     {
-        return ToStringBuilder.reflectionToString (this, ToStringStyle.SHORT_PREFIX_STYLE);
+        System.out.println ("setApplicationContext");
+    }
+
+    public void beanInit ()
+    {
+        System.out.println ("beanInit");
+    }
+
+    public void setBeanClassLoader (ClassLoader classLoader)
+    {
+        System.out.println ("setBeanClassLoader");
+    }
+
+    public void setBeanFactory (BeanFactory beanFactory) throws BeansException
+    {
+        System.out.println ("setBeanFactory");
     }
 }

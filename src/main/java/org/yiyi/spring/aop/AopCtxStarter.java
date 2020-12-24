@@ -31,33 +31,30 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.aop;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
+import org.yiyi.spring.aop.service.IAopTestService;
 
-import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 
 /**
- * classPathXmlApplicationContext启动
+ * 测试aop的ctx启动类
+ *
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.22
  */
-public class ClzPathAppCtxStarter
+public class AopCtxStarter
 {
-    public static void main (String[] args)
+    public static void main (String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/aop/application.xml");
 
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
+//        Object proxyFactoryBean = ctx.getBean ("proxyFactoryBean");
+//        proxyFactoryBean.getClass ().getMethod ("sayHello").invoke (proxyFactoryBean);
 
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
-
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+        IAopTestService service = (IAopTestService)ctx.getBean ("aopTestService");
+        service.sayHello ();
+        service.sayGoodbye ();
     }
 }

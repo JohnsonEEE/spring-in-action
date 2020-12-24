@@ -31,33 +31,42 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.aop.advice;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
-
-import java.lang.annotation.Annotation;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 
 /**
- * classPathXmlApplicationContext启动
+ * 包围且可抛异常的拦截器基类
+ *
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.24
  */
-public class ClzPathAppCtxStarter
+public abstract class AbsRoundAndThrowableInterceptor implements MethodInterceptor
 {
-    public static void main (String[] args)
+
+    public Object invoke (MethodInvocation invocation) throws Throwable
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
+        doBefore ();
 
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
+        Object retVal;
+        try
+        {
+            retVal = invocation.proceed ();
+        }
+        catch (Throwable throwable)
+        {
+            doWhenThrow ();
+            throw throwable;
+        }
 
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
-
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+        doAfter ();
+        return retVal;
     }
+
+    abstract void doBefore ();
+
+    abstract void doAfter ();
+
+    abstract void doWhenThrow ();
 }

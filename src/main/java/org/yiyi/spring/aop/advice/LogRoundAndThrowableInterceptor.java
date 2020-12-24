@@ -31,33 +31,48 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.aop.advice;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
-
-import java.lang.annotation.Annotation;
+import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
- * classPathXmlApplicationContext启动
+ * 日志interceptor
+ *
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.24
  */
-public class ClzPathAppCtxStarter
+public class LogRoundAndThrowableInterceptor extends AbsRoundAndThrowableInterceptor
 {
-    public static void main (String[] args)
+
+    public void doBefore ()
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
+        System.out.println ("log 前");
+    }
 
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
+    public void doAfter ()
+    {
+        System.out.println ("log 后");
+    }
 
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
+    public void doWhenThrow ()
+    {
+        System.out.println ("log 异常");
+    }
 
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+    public Object doAround (ProceedingJoinPoint joinPoint) throws Throwable
+    {
+        System.out.println ("log aound 前");
+        Object proceed;
+        try
+        {
+            proceed = joinPoint.proceed ();
+        }
+        catch (Throwable throwable)
+        {
+            System.out.println ("log aound 异常");
+            throw throwable;
+        }
+        System.out.println ("log aound 后");
+        return proceed;
     }
 }

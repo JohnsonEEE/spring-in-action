@@ -31,33 +31,52 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.aop.pointcut;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
+import org.springframework.aop.ClassFilter;
+import org.springframework.aop.MethodMatcher;
+import org.springframework.aop.Pointcut;
 
-import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 /**
- * classPathXmlApplicationContext启动
+ * 测试pointcut
+ *
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.22
  */
-public class ClzPathAppCtxStarter
+public class TestPointcut implements Pointcut
 {
-    public static void main (String[] args)
+
+    public ClassFilter getClassFilter ()
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
+        return new ClassFilter ()
+        {
+            public boolean matches (Class <?> clazz)
+            {
+                return true;
+            }
+        };
+    }
 
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
+    public MethodMatcher getMethodMatcher ()
+    {
+        return new MethodMatcher ()
+        {
+            public boolean matches (Method method, Class <?> targetClass)
+            {
+                return true;
+            }
 
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
+            public boolean isRuntime ()
+            {
+                return true;
+            }
 
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+            public boolean matches (Method method, Class <?> targetClass, Object[] args)
+            {
+                return true;
+            }
+        };
     }
 }

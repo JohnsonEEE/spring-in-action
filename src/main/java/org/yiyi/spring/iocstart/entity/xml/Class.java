@@ -31,33 +31,38 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.iocstart.entity.xml;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
-
-import java.lang.annotation.Annotation;
+import java.util.List;
 
 /**
- * classPathXmlApplicationContext启动
+ * 班级
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.14
  */
-public class ClzPathAppCtxStarter
+public class Class
 {
-    public static void main (String[] args)
+    private People classPresident;
+
+    private List <People> students;
+
+    public People getClassPresident ()
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
+        return classPresident;
+    }
 
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
+    public void setClassPresident (People classPresident)
+    {
+        this.classPresident = classPresident;
+    }
 
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
+    public List <People> getStudents ()
+    {
+        return students;
+    }
 
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+    public void setStudents (List <People> students)
+    {
+        this.students = students;
     }
 }

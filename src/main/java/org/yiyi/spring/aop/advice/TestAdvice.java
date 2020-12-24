@@ -31,33 +31,23 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.aop.advice;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
+import org.springframework.aop.MethodBeforeAdvice;
 
-import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 /**
- * classPathXmlApplicationContext启动
+ * 测试advice
+ *
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.22
  */
-public class ClzPathAppCtxStarter
+public class TestAdvice implements MethodBeforeAdvice
 {
-    public static void main (String[] args)
+
+    public void before (Method method, Object[] args, Object target) throws Throwable
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
-
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
-
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
-
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+        System.out.println ("TestAdvice before, method name = " + method.getName ());
     }
 }

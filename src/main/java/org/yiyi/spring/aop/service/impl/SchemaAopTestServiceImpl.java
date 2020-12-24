@@ -31,33 +31,19 @@
  *
  * Copyright version 2.0
  */
-package org.yiyi.spring.iocstart;
+package org.yiyi.spring.aop.service.impl;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.yiyi.spring.iocstart.entity.annotation.AutowireDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.AwareDemoBean;
-import org.yiyi.spring.iocstart.entity.xml.People;
-
-import java.lang.annotation.Annotation;
+import org.yiyi.spring.aop.service.ISchemaAopTestService;
 
 /**
- * classPathXmlApplicationContext启动
  * @author yi.yi
- * @date 2020.12.04
+ * @date 2020.12.24
  */
-public class ClzPathAppCtxStarter
+public class SchemaAopTestServiceImpl implements ISchemaAopTestService
 {
-    public static void main (String[] args)
+
+    public void saySchemeHello ()
     {
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext ("META-INF/iocstart/application.xml");
-
-        People people = (People)ctx.getBean ("people");
-        System.out.println (people);
-
-        AwareDemoBean awareDemoBean = (AwareDemoBean)ctx.getBean ("awareDemoBean");
-        System.out.println (awareDemoBean);
-
-        AutowireDemoBean autowireDemoBean = (AutowireDemoBean)ctx.getBean ("autowireDemoBean");
-        System.out.println (autowireDemoBean);
+        System.out.println ("hello scheme world");
     }
 }

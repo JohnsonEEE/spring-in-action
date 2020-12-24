@@ -9,8 +9,19 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-    <bean id="people" class="org.yiyi.spring.iocstart.entity.People">
+    <context:component-scan base-package="org.yiyi.spring.iocstart.entity.annotation" />
+
+    <bean id="people" class="org.yiyi.spring.iocstart.entity.xml.People">
         <property name="id" value="xxxx"/>
         <property name="name" value="jojo" />
     </bean>
+
+    <bean id="class" class="org.yiyi.spring.iocstart.entity.xml.Class">
+        <property name="classPresident" ref="people" />
+        <property name="students">
+            <list value-type="org.yiyi.spring.iocstart.entity.xml.People" />
+        </property>
+    </bean>
+
+    <bean id="awareDemoBean" class="org.yiyi.spring.iocstart.entity.xml.AwareDemoBean" lazy-init="true" scope="prototype" init-method="beanInit"/>
 </beans>
